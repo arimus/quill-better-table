@@ -25,7 +25,10 @@
     "url": "https://github.com/soccerloway/quill-better-table/issues"
   },
   "homepage": "https://github.com/soccerloway/quill-better-table#readme",
-  "dependencies": {},
+  "dependencies": {
+    "@popperjs/core": "^2.5.4",
+    "jquery": "^3.5.1"
+  },
   "devDependencies": {
     "quill": "^2.0.0-dev.3",
     "@babel/core": "^7.4.3",
@@ -44,5 +47,10 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
     "webpack-dev-server": "^3.2.1"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
   }
 }

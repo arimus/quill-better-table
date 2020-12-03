@@ -2,6 +2,8 @@ import Quill from 'quill'
 import TableColumnTool from './modules/table-column-tool'
 import TableSelection from './modules/table-selection'
 import TableOperationMenu from './modules/table-operation-menu'
+import TableMovingTool from './modules/table-moving-tool'
+import TableStyleTool from './modules/table-style-tool'
 
 // import table node matchers
 import {
@@ -207,6 +209,8 @@ class BetterTable extends Module {
     this.table = table
     this.columnTool = new TableColumnTool(table, quill, options)
     this.tableSelection = new TableSelection(table, quill, options)
+    this.movingTool = new TableMovingTool(table, quill, options)
+    this.styleTool = new TableStyleTool(table, quill, options)
   }
 
   hideTableTools () {
@@ -217,6 +221,12 @@ class BetterTable extends Module {
     this.tableSelection = null
     this.tableOperationMenu = null
     this.table = null
+    this.movingTool && this.movingTool.destroy()
+    this.styleTool && this.styleTool.destroy()
+  }
+
+  getSelectedCells() {
+    return this.tableSelection.selectedTds;
   }
 }
 
@@ -288,7 +298,7 @@ BetterTable.keyboardBindings = {
       if (target && target.statics.blotName === 'table-view') {
         const targetCell = target.table().rows()[0].children.head
         const targetLine = targetCell.children.head
-        
+
         this.quill.setSelection(
           targetLine.offset(this.quill.scroll),
           0,
@@ -309,7 +319,7 @@ BetterTable.keyboardBindings = {
         const rows = target.table().rows()
         const targetCell = rows[rows.length - 1].children.head
         const targetLine = targetCell.children.head
-        
+
         this.quill.setSelection(
           targetLine.offset(this.quill.scroll),
           0,
@@ -348,7 +358,7 @@ function makeTableArrowHandler (up) {
           cur = cur.prev
           totalColspanOfCur += parseInt(cur.formats()['colspan'], 10)
         }
-        
+
         while (targetCell.next != null && totalColspanOfTargetCell < totalColspanOfCur) {
           targetCell = targetCell.next
           totalColspanOfTargetCell += parseInt(targetCell.formats()['colspan'], 10)

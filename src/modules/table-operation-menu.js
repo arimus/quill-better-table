@@ -261,6 +261,8 @@ export default class TableOperationMenu {
     this.options = options
     this.menuItems = Object.assign({}, MENU_ITEMS_DEFAULT, options.items)
     this.tableColumnTool = betterTableModule.columnTool
+    this.tableStyleTool = betterTableModule.tableStyleTool
+    this.tableMoveTool = betterTableModule.tableMoveTool
     this.boundary = this.tableSelection.boundary
     this.selectedTds = this.tableSelection.selectedTds
     this.destroyHandler = this.destroy.bind(this)
